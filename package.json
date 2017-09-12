@@ -1,0 +1,16 @@
+{
+  "name": "i3windowstack",
+  "version": "1.0.0",
+  "description": "",
+  "main": "i3windowstack.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "start": "node ./i3windowstack.js"
+  },
+  "author": "",
+  "license": "ISC",
+  "dependencies": {
+    "i3": "^0.2.1",
+    "pm2": "^2.6.1"
+  }
+}
