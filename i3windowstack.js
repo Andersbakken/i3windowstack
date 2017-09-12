@@ -25,9 +25,8 @@ function sendMessage(pm_id)
         if (err)
             console.error("got error", err);
     });
-
-
 }
+
 pm2.connect((err) => {
     if (err) {
         console.error(err);
@@ -57,12 +56,6 @@ pm2.connect((err) => {
                 pm2.disconnect();
                 throw err;
             } else {
-                for (let app of apps) {
-                    if (app.name == 'i3windowstack') {
-                        sendMessage(app.pm_id);
-                        return;
-                    }
-                }
                 pm2.disconnect();
             }
         });
