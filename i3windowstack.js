@@ -42,23 +42,39 @@ pm2.connect((err) => {
         }
         for (let process of processes) {
             if (process.name == "i3windowstack" && process.pm2_env.status == 'online') {
-                sendMessage(process.pm_id);
-                return;
+                if (argv.restart) {
+                    // console.log("restarting");
+                    try {
+                        pm2.stop(process.pm_id);
+                        setTimeout(start, 1000);
+                        return;
+                    } catch (err) {
+                        // console.log("GOT err", err);
+                    }
+                } else {
+                    sendMessage(process.pm_id);
+                    return;
+                }
             }
         }
-        pm2.start({
-            script: 'lib/impl.js',
-            name: "i3windowstack",
-            env: process.env,
-            exec_mode: 'fork'
-        }, (err, apps) => {
-            if (err) {
-                pm2.disconnect();
-                throw err;
-            } else {
-                pm2.disconnect();
-            }
-        });
+
+        function start()
+        {
+            pm2.start({
+                script: 'lib/impl.js',
+                name: "i3windowstack",
+                env: process.env,
+                exec_mode: 'fork'
+            }, (err, apps) => {
+                if (err) {
+                    pm2.disconnect();
+                    throw err;
+                } else {
+                    pm2.disconnect();
+                }
+            });
+        }
+        start();
     });
 });
 
