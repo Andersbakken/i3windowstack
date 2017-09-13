@@ -4,6 +4,7 @@
 
 const pm2 = require('pm2');
 const argv = require('minimist')(process.argv.slice(2));
+const path = require('path');
 
 function sendMessage(pm_id)
 {
@@ -61,7 +62,7 @@ pm2.connect((err) => {
         function start()
         {
             pm2.start({
-                script: 'lib/impl.js',
+                script: path.join(__dirname, 'lib/impl.js'),
                 name: "i3windowstack",
                 env: process.env,
                 exec_mode: 'fork'
